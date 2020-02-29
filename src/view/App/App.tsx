@@ -5,7 +5,8 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import { Menu, Icon } from 'antd'
+import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 import Home from '../Home/Home'
 import Recommend from '../Recommend/Recommend'
 import Mine from '../Mine/Mine'
@@ -28,13 +29,13 @@ class App extends React.Component {
       <Router>
       <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal"  style={{ display: 'flex', justifyContent: 'space-around' }}>
         <Menu.Item key="home">
-          <Link to="/"><Icon type="mail" />首页</Link>
+          <Link to="/"><MailOutlined />首页</Link>
         </Menu.Item>
         <Menu.Item key="recommend">
-          <Link to="/recommend"><Icon type="appstore" />推荐</Link>
+          <Link to="/recommend"><AppstoreOutlined />推荐</Link>
         </Menu.Item>
         <Menu.Item key="mine">
-          <Link to="/mine"><Icon type="appstore" />我的</Link>
+          <Link to="/mine"><AppstoreOutlined />我的</Link>
         </Menu.Item>
       </Menu>
       <Switch>
