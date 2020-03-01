@@ -1,2 +1,6 @@
 .App {
 }
+.space-around {
+    display: flex;
+    justify-content: space-around;
+}
