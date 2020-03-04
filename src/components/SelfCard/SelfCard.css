@@ -1,0 +1,13 @@
+.self-card {
+    width: 90%;
+    margin: 0 auto
+}
+.head-example {
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    /* background: #eee; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

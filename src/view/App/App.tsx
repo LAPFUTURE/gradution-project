@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom'
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
+import { Menu, BackTop } from 'antd';
 import Home from '../Home/Home'
 import Recommend from '../Recommend/Recommend'
 import Mine from '../Mine/Mine'
@@ -27,7 +27,8 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal"  style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal"
+      className="menu-container">
         <Menu.Item key="home">
           <Link to="/"><MailOutlined />首页</Link>
         </Menu.Item>
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Home />
         </Route>
       </Switch>
+      <BackTop />
       </Router>
     );
   }

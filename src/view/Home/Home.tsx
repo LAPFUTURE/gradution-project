@@ -1,91 +1,67 @@
-import React, { useState } from 'react'
-import { Button, Card, Col, Row, Avatar, Badge } from 'antd'
-import { EditOutlined, EllipsisOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons'
+import React, { useState, useEffect } from 'react'
+// import useMount from 'react-use'
+import { Col, Row } from 'antd'
+import SelfCard from '../../components/SelfCard/SelfCard'
 import './Home.css'
 
-const { Meta } = Card
-
-interface Person {
+interface cardData {
+    id: number,
     name: string,
-    age: number
+    title: string,
+    pic: Array<string>,
+    description: string,
+    like: number,
+    dislike: number
 }
 export default function Home() {
-    // let [num, setNum] = useState<number>(0)
-    // let [name, setName] = useState<string>('')
-    // let [person, setPerson] = useState<Person>({name: 'lap', age: 22})
+    let [cardData, setCardData] = useState<any>([])
+    useEffect(()=>{
+        let temp:Array<cardData> = [{
+            id: 0,
+            name: 'LAPFUTURE4',
+            title: '肉末茄子',
+            pic:[
+                'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+            ],
+            description: 'deliclous4',
+            like: 5,
+            dislike: 2
+        }]
+        for (let i = 1; i < 10; i++) {
+            temp.push({
+                id: i,
+                name: 'LAPFUTURE4',
+                title: '肉末茄子',
+                pic:[
+                    'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                    'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                    'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                ],
+                description: 'deliclous4',
+                like: i + 5,
+                dislike: i + 2
+            })
+        }
+        setCardData(temp)
+    }, [])
     return (
-        <div>
-            <p className="space-around" style={{ marginTop: '14px' }}>
+        <div style={{ marginTop: '60px' }}>
+            {/* <p className="space-around" style={{ marginTop: '14px' }}>
                 <Button type="default" size="small">One</Button>
                 <Button type="default" size="small">Two</Button>
                 <Button type="default" size="small">Three</Button>
-            </p>
-            {/* <Button onClick={() => { setNum(num+1) }}>
-              yeah { num }
-            </Button>
-            <Button onClick={() => { setName('LAPFUTURE is a boy!') }}>
-              showName { name }
-            </Button>
-            <Button onClick={() => { setPerson({ name: 'LAPFUTURE', age: 21 }) }}>
-              setPerson { person.name + person.age }
-            </Button> */}
+            </p> */}
             <div>
-                <Row gutter={12}>
-                    <Col span={12}>
-                        <Card
-                            style={{ width: "100%" }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                            actions={[
-                            <Badge count={12}>
-                                <span className="head-example">
-                                    <LikeOutlined twoToneColor="#eb2f96" key="setting" onClick={() => {console.log(123)}}/>
-                                </span>
-                            </Badge>,
-                            <Badge count={5} style={{ backgroundColor: '#52c41a' }}>
-                                <span className="head-example">
-                                    <DislikeOutlined key="dislike" />,
-                                </span>
-                            </Badge>,
-                            <Badge>
-                                <span className="head-example">
-                                    <EditOutlined key="edit" />
-                                </span>
-                            </Badge>
-                            ]}
-                        >
-                            <Meta
-                            title="肉末茄子"
-                            description="这是一个很好吃的菜！！！"
-                            />
-                        </Card>,
-                    </Col>
-                    <Col span={12}>
-                        <Card
-                            style={{ width: '100%' }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                            actions={[
-                            <LikeOutlined key="setting" onClick={() => {console.log(123)}}/>,
-                            <EditOutlined key="edit" />,
-                            <EllipsisOutlined key="ellipsis" />,
-                            ]}
-                        >
-                            <Meta
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Card title"
-                            description="This is the description"
-                            />
-                        </Card>,
-                    </Col>
+                <Row>
+                    {
+                        cardData.map((item:any) => (
+                            <Col span={12} key={item.id}>
+                                <SelfCard data={item}/>
+                            </Col>
+                        ))
+                    }
                 </Row>
             </div>
         </div>
