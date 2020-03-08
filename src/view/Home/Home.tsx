@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 // import useMount from 'react-use'
+import { getCardData } from '../../api/index'
 import { Col, Row } from 'antd'
 import SelfCard from '../../components/SelfCard/SelfCard'
 import './Home.css'
-
+console.log('getCardData:', getCardData('123'))
 interface cardData {
     id: number,
     name: string,

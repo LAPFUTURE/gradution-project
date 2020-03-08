@@ -10,9 +10,10 @@ import { Menu, BackTop } from 'antd';
 import Home from '../Home/Home'
 import Recommend from '../Recommend/Recommend'
 import Mine from '../Mine/Mine'
+import Write from '../Write/Write'
 import './App.css'
-
 class App extends React.Component {
+  
   state = {
     current: 'home',
   };
@@ -23,7 +24,22 @@ class App extends React.Component {
       current: e.key,
     });
   };
-
+  componentDidMount() {
+    console.log('mounted')
+  }
+    // 在页面加载时读取sessionStorage里的状态信息
+    // if (sessionStorage.getItem('store')) {
+    //   this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem('store'))))
+    // }
+    // // 在页面刷新时将vuex里的信息保存到sessionStorage里
+    // window.addEventListener('beforeunload', () => {
+    //   sessionStorage.setItem('store', JSON.stringify(this.$store.state));
+    // })
+    // window.addEventListener('unhandledrejection', event => {
+    //   // 可以在这里添加一些代码，以便检查event.promise 中的 promise 和event.reason 中的 rejection 原因
+    //   console.log(`status:${event.reason.request.status},statusText:${event.reason.request.statusText}`)
+    //   event.preventDefault()
+    // }, false)
   render() {
     return (
       <Router>
@@ -45,6 +61,9 @@ class App extends React.Component {
         </Route>
         <Route path="/mine">
           <Mine />
+        </Route>
+        <Route path="/write/:id" component={Write}>
+          {/* <Write /> */}
         </Route>
         <Route path="/">
           <Home />

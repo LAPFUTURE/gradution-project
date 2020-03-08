@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import {
+    Link
+} from 'react-router-dom'
 import { Card, Badge } from 'antd'
 import { EditOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons'
 import './SelfCard.css'
 
 const { Meta } = Card
 interface cardData {
+    id: number,
     name: string,
     title: string,
+    pic: Array<string>,
     description: string,
     like: number,
     dislike: number
@@ -43,7 +48,9 @@ export default function Index(props: { data: cardData }) {
                 </Badge>,
                 <Badge>
                     <span className="head-example">
-                        <EditOutlined key="edit" />
+                        <Link to={`/write/${data.id}`}>
+                            <EditOutlined key="edit" />
+                        </Link>
                     </span>
                 </Badge>
                 ]}
