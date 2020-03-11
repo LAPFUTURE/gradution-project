@@ -5,7 +5,7 @@ import Login from '../Login/Login'
 
 function Mine() {
   return(
-    <div className="mt-container">
+    <div>
       Mine
     </div>
   )

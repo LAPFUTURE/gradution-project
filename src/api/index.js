@@ -42,7 +42,23 @@ function axiosGet(url) {
   }
 }
 
-const getCardData = axiosGet('/getCardData')
+function axiosPost(url) {
+  return function(params) {
+    return axios.post(generateUrl(url, params))
+  }
+}
+
+const postLogin = axiosPost('/postLogin') // 登录
+const postRegister = axiosPost('/postRegister') // 注册
+const getCardData = axiosGet('/getCardData') // 获取数据列表
+const getCardDetail = axiosGet('/getCardDetail') // 获取单条数据详情
+const postComment = axiosPost('/postComment') // 添加评论
+
+
 export {
-  getCardData
+  postLogin,
+  postRegister,
+  getCardData,
+  getCardDetail,
+  postComment
 }

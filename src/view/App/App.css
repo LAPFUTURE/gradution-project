@@ -8,11 +8,14 @@
     z-index: 5;
     width:100%;
 }
-.mt-container {
+/* .mt-container {
     margin-top: 46px;
-}
+} */
 .margin-auto {
     margin: 0 auto;
+}
+.text-center {
+    text-align: center;
 }
 .ellipsis{
     overflow: hidden;
@@ -26,4 +29,9 @@
 .space-between {
     display: flex;
     justify-content: space-between;
+}
+.full-image{
+    background-position: center center;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
