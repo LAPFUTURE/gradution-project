@@ -8,7 +8,22 @@
     z-index: 5;
     width:100%;
 }
+.mt-container {
+    margin-top: 46px;
+}
+.margin-auto {
+    margin: 0 auto;
+}
+.ellipsis{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
 .space-around {
     display: flex;
     justify-content: space-around;
+}
+.space-between {
+    display: flex;
+    justify-content: space-between;
 }

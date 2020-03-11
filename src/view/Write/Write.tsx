@@ -4,7 +4,7 @@ export default function Recommend(props:any) {
     console.log(props.match.params)
     let id = props.match.params.id
     return (
-        <div className="write-container">
+        <div className="mt-container">
             <h2>{id}write</h2>
         </div>
     )

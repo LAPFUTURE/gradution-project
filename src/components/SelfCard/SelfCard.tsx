@@ -11,6 +11,7 @@ interface cardData {
     id: number,
     name: string,
     title: string,
+    belong: string,
     pic: Array<string>,
     description: string,
     like: number,
@@ -18,6 +19,12 @@ interface cardData {
 }
 export default function Index(props: { data: cardData }) {
     let { data } = props
+    if (data.like > 99 || data.like < 0) {
+        data.like = 99
+    } 
+    if (data.dislike > 99 || data.dislike < 0) {
+        data.dislike = 99
+    } 
     let [like, setLike] = useState<number>(data.like)
     return (
         <div style={{marginBottom: "14px"}}>
@@ -27,7 +34,7 @@ export default function Index(props: { data: cardData }) {
                 cover={
                 <img
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src={ 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png' || data.pic[0] }
                 />
                 }
                 actions={[
@@ -56,8 +63,8 @@ export default function Index(props: { data: cardData }) {
                 ]}
             >
                 <Meta
-                title={data.title}
-                description={data.description}
+                title={data.title + data.belong}
+                description={<p className="ellipsis">{data.description}</p>}
                 />
             </Card>
         </div>
