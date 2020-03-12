@@ -53,6 +53,7 @@ const postRegister = axiosPost('/postRegister') // 注册
 const getCardData = axiosGet('/getCardData') // 获取数据列表
 const getCardDetail = axiosGet('/getCardDetail') // 获取单条数据详情
 const postComment = axiosPost('/postComment') // 添加评论
+const getRoleList = axiosGet('/getRoleList') // 获取权限角色列表
 
 
 export {
@@ -60,5 +61,6 @@ export {
   postRegister,
   getCardData,
   getCardDetail,
-  postComment
+  postComment,
+  getRoleList
 }
