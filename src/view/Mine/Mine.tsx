@@ -1,23 +1,24 @@
 import React from 'react'
 import { getters } from '../../sessionStorage'
-import { Route } from 'react-router-dom'
 import Login from '../Login/Login'
+import Adm from './Adm'
+import Student from './Student'
+import Worker from './Worker'
 
 function Mine() {
+  let userInfo = getters.GET_USERINFO()
+  let arr = [<Adm />, <Student />, <Worker />]
+  userInfo.role = 1
   return(
-    <div>
-      Mine
-    </div>
+    (userInfo.role <= 1) ? arr[userInfo.role] : arr[2]
   )
 }
 
-export default function Index() {
+function Index() {
   let isLogin = getters.GET_TOKEN()
   return (
-    <Route exact path="/mine">
-      {
-        isLogin ? <Mine /> : <Login />
-      }
-    </Route>
+    isLogin ? <Mine /> : <Login />
   )
 }
+
+export default Index

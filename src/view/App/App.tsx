@@ -50,6 +50,9 @@ function App(props:any) {
       <Route path="/mine">
         <Mine />
       </Route>
+      <Route path="/mineLogined">
+        <Mine />
+      </Route>
       <Route path="/login">
         <Login />
       </Route>

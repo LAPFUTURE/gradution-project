@@ -67,7 +67,7 @@ export default function Recommend(props:any) {
     return (
         <div className="mt-container">
             <h2 className="text-center">{name}</h2>
-            <Carousel  style={{height: '200px', width: '100vw'}}>
+            <Carousel  style={{height: '200px', width: '100vw', minHeight: '200px'}}>
             {/* autoplay */}
                 {
                     pic.map((url, index) => {

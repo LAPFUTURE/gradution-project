@@ -50,15 +50,16 @@ function axiosPost(url) {
 
 const postLogin = axiosPost('/postLogin') // 登录
 const postRegister = axiosPost('/postRegister') // 注册
+const postChangeUserName = axiosPost('/postChangeUserName') // 修改用户昵称
 const getCardData = axiosGet('/getCardData') // 获取数据列表
 const getCardDetail = axiosGet('/getCardDetail') // 获取单条数据详情
 const postComment = axiosPost('/postComment') // 添加评论
 const getRoleList = axiosGet('/getRoleList') // 获取权限角色列表
 
-
 export {
   postLogin,
   postRegister,
+  postChangeUserName,
   getCardData,
   getCardDetail,
   postComment,

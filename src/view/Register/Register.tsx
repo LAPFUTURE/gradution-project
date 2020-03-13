@@ -44,16 +44,16 @@ function Register(props:any) {
         <div style={{ paddingTop: 20 }}>
             <Card hoverable title={<p style={{ textAlign: "center" }}>注册</p>} extra='' style={{ width: 300 }} className="margin-auto">
                 <Input
-                    placeholder="请输入您的昵称"
-                    value={userName}
-                    onChange={(e)=>{setUserName(e.target.value)}}
-                    prefix={<SmileOutlined className="site-form-item-icon" />}
-                    suffix={
-                        <Tooltip title="Extra information">
-                        <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-                        </Tooltip>
-                    }
-                    />
+                  placeholder="请输入您的昵称"
+                  value={userName}
+                  onChange={(e)=>{setUserName(e.target.value)}}
+                  prefix={<SmileOutlined className="site-form-item-icon" />}
+                  suffix={
+                      <Tooltip title="Extra information">
+                      <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                      </Tooltip>
+                  }
+                />
                 <br />
                 <br />
                 <Input
