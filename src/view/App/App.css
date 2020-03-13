@@ -1,37 +1,48 @@
 /* .App {
 } */
+/* html{
+  touch-action:none;
+} */
 .menu-container {
-    display: flex;
-    justify-content: space-around;
-    position: fixed;
-    top: 0;
-    z-index: 5;
-    width:100%;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  width:100%;
 }
 /* .mt-container {
     margin-top: 46px;
 } */
 .margin-auto {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 .ellipsis{
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .space-around {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 .space-between {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .full-image{
-    background-position: center center;
-    background-size: 100%;
-    background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.evan-you {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -10;
+  width: 100%;
+  pointer-events: none;
 }

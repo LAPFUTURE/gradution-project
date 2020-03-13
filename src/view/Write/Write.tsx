@@ -10,59 +10,64 @@ import { SendOutlined } from '@ant-design/icons'
 const { Search } = Input
 
 export default function Recommend(props:any) {
-    let { id } = props.match.params
-    let [name, setName] = useState('')
-    let [pic, setPic] = useState([])
-    let [loading, setLoading] = useState(false)
-    let [hasMore, setHasmore] = useState(true)
-    let [comments, setComments] = useState([])
-    let [page, setPage] = useState(1)
-    let [pageSize] = useState(10)
+  let { id } = props.match.params
+  let [name, setName] = useState('')
+  let [pic, setPic] = useState([])
+  let [loading, setLoading] = useState(false)
+  let [hasMore, setHasmore] = useState(true)
+  let [comments, setComments] = useState([])
+  let [title, setTitle] = useState('')
+  let [description, setDescription] = useState('')
+  let [page, setPage] = useState(1)
+  let [pageSize] = useState(10)
 
-    let handleInfiniteOnLoad = () => {
-        if (hasMore) {
-            let data  = comments
-            setLoading(true)
-            getCardDetail({id, page, pageSize}).then((res:any) => {
-                let { pic, name, comments } = res
-                setPic(pic)
-                setName(name)
-                setComments(data.concat(comments))
-                setHasmore(true)
-                setLoading(false)
-                if (comments.length < pageSize) {
-                    message.warning('已经到底了~')
-                    setHasmore(false)
-                    setLoading(false)
-                }
-            })
+  let handleInfiniteOnLoad = () => {
+    if (hasMore) {
+      let data  = comments
+      setLoading(true)
+      getCardDetail({id, page, pageSize}).then((res:any) => {
+        let { pic, name, comments, title, description } = res
+        setPic(pic)
+        setName(name)
+        setComments(data.concat(comments))
+        setTitle(title)
+        setDescription(description)
+        setHasmore(true)
+        setLoading(false)
+        if (comments.length < pageSize) {
+          message.warning('已经到底了~')
+          setHasmore(false)
+          setLoading(false)
         }
+      })
     }
-    let doPostComment = async (comment:any) => {
-        if (comment) {
-            let res:any = await postComment({id,comment})
-            let { code, msg, detail } = res
-            if (code === 0) {
-                let temp = JSON.parse(JSON.stringify(comments))
-                temp.unshift(detail)
-                setComments(temp)
-                message.success(msg)
-            } else {
-                message.error(msg)
-            }
-        } else {
-            message.warning('请检查输入框~')
-        }
+  }
+  let doPostComment = async (comment:any) => {
+    if (comment) {
+      let res:any = await postComment({id,comment})
+      let { code, msg, detail } = res
+      if (code === 0) {
+          let temp = JSON.parse(JSON.stringify(comments))
+          temp.unshift(detail)
+          setComments(temp)
+          message.success(msg)
+      } else {
+          message.error(msg)
+      }
+    } else {
+      message.warning('请检查输入框~')
     }
-    useMount(() => {
-        getCardDetail({id, page, pageSize}).then((res:any) => {
-            let { pic, name, comments } = res
-            setPic(pic)
-            setName(name)
-            setComments(comments)
-            setPage(page + 1)
-        })
+  }
+  useMount(() => {
+    getCardDetail({id, page, pageSize}).then((res:any) => {
+      let { pic, name, comments } = res
+      console.log(res)
+      setPic(pic)
+      setName(name)
+      setComments(comments)
+      setPage(page + 1)
     })
+  })
 
     return (
         <div className="mt-container">
@@ -83,10 +88,12 @@ export default function Recommend(props:any) {
                     })
                 }
             </Carousel>
+            <h2>{title}</h2>
+            <p>{description}</p>
             <br/>
             <Search placeholder="input search text"
-                onSearch={(comment) => { doPostComment(comment) }}
-                enterButton={<SendOutlined twoToneColor="#1890ff"/>}
+              onSearch={(comment) => { doPostComment(comment) }}
+              enterButton={<SendOutlined twoToneColor="#1890ff"/>}
             />
             <div className="demo-infinite-container" style={{borderTop: 0}}>
                 <InfiniteScroll

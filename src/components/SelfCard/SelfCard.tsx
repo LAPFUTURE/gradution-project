@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {
     Link
 } from 'react-router-dom'
-import { Card, Badge } from 'antd'
+import { Card, Badge, Tag } from 'antd'
 import { EditOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons'
 import './SelfCard.css'
 
@@ -11,7 +11,7 @@ interface cardData {
     id: number,
     name: string,
     title: string,
-    belong: string,
+    userInfo: any,
     pic: Array<string>,
     description: string,
     like: number,
@@ -26,16 +26,17 @@ export default function Index(props: { data: cardData }) {
         data.dislike = 99
     } 
     let [like, setLike] = useState<number>(data.like)
+    let [roleDetail] = useState(data.userInfo.roleDetail)
     return (
-        <div style={{marginBottom: "14px"}}>
+        <div style={{marginBottom: 14, position:'relative'}}>
             <Card
                 className="self-card"
                 hoverable={true}
                 cover={
-                <img
+                  <img
                     alt="example"
                     src={ 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png' || data.pic[0] }
-                />
+                  />
                 }
                 actions={[
                 <Badge count={like}>
@@ -63,10 +64,13 @@ export default function Index(props: { data: cardData }) {
                 ]}
             >
                 <Meta
-                title={data.title + data.belong}
+                title={data.name + data.title}
                 description={<p className="ellipsis">{data.description}</p>}
                 />
             </Card>
+            <div style={{ position: 'absolute',top:-1,right:2 }}>
+              <Tag color={roleDetail.color}>{ roleDetail.name }</Tag>
+            </div>
         </div>
     )
 }
