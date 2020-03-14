@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Avatar, Card, Button, Modal, Input, Tooltip, message, Badge } from 'antd'
 import { getters, setters } from '../../sessionStorage'
-import { postChangeUserName, postChangePassword, getCommentSum, getCollectionSum } from '../../api' 
+import { postChangeUserName, postChangePassword, getCommentSumAndCollectionSum } from '../../api' 
 import { SendOutlined, LikeOutlined, SettingFilled, CommentOutlined, SmileOutlined, InfoCircleOutlined, KeyOutlined, EditOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { useMount } from 'react-use'
@@ -10,7 +10,7 @@ function Student(props:any) {
   let { history } = props
   let userInfo = getters.GET_USERINFO()
 
-  let [avatar, setAvatar] = useState('https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png')
+  let [avatar] = useState('https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png')
   let [userNameVisible, setUserNameVisible] = useState(false)
   let [userName, setUserName] = useState('')
   let [oldUserName, setOldUserName] = useState(userInfo.userName)
@@ -57,20 +57,18 @@ function Student(props:any) {
     }
   }
   useMount(() => {
-   getCollectionSum().then((res:any) => {
-     if (res.collectionSum > 999) {
-      setCollectionSum(999)
-     } else {
-       setCollectionSum(res.collectionSum)
-     }
-   })
-   getCommentSum().then((res:any) => {
-    if (res.commentSum > 999) {
-      setCommentSum(999)
-     } else {
-      setCommentSum(res.commentSum)
-     }
-   })
+    getCommentSumAndCollectionSum().then((res:any) => {
+      if (res.collectionSum > 999) {
+        setCollectionSum(999)
+      } else {
+        setCollectionSum(res.collectionSum)
+      }
+      if (res.commentSum > 999) {
+        setCommentSum(999)
+      } else {
+        setCommentSum(res.commentSum)
+      }
+    })
   })
 return (
   <div>

@@ -27,18 +27,18 @@ function Login(props:any) {
     let res:any = await postLogin({account,password,role})
     let {code, msg, token, userInfo} = res
     if(code !== 0) {
-        setters.SET_TOKEN(token)
-        setters.SET_USERINFO(userInfo)
-        message.success(msg)
-        history.push('/mineLogined')
+      setters.SET_TOKEN(token)
+      setters.SET_USERINFO(userInfo)
+      message.success(msg)
+      history.push('/mineLogined')
     } else {
-        message.error(msg)
+      message.error(msg)
     }
   }
   useMount(() => {
     getRoleList().then((res:any) => {
-        let { list } = res
-        setRoleList(list)
+      let { list } = res
+      setRoleList(list)
     })
   })
 
@@ -64,17 +64,17 @@ function Login(props:any) {
         <br />
         <br />
         <div className="space-around" style={{width: '80%'}}>
-            <InputGroup compact>
-              <Select style={{ width: 250 }} defaultValue={role}
-              onChange={(value) => {setRole(value)}}
-              >
-              {
-                  roleList.map((item:any) => (
-                      <Option value={item.role} key={item.role}>{item.name}</Option>
-                  ))
-              }
-              </Select>
-            </InputGroup>
+          <InputGroup compact>
+            <Select style={{ width: 250 }} defaultValue={role}
+            onChange={(value) => {setRole(value)}}
+            >
+            {
+              roleList.map((item:any) => (
+                <Option value={item.role} key={item.role}>{item.name}</Option>
+              ))
+            }
+            </Select>
+          </InputGroup>
         </div>
         <br />
         <br />

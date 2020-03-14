@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getters } from '../sessionStorage'
-import { message } from 'antd'
+// import { message } from 'antd'
 
 const BASE_URL_MAP = {
   deploy: 'http://localhost',
@@ -49,24 +49,32 @@ const postLogin = axiosPost('/postLogin') // 登录
 const postRegister = axiosPost('/postRegister') // 注册
 const postChangeUserName = axiosPost('/postChangeUserName') // 修改昵称
 const postChangePassword = axiosPost('/postChangePassword') // 修改密码
-const getCommentSum = axiosGet('/getCommentSum') // 获取用户的评论总数目
-const getCollectionSum = axiosGet('/getCollectionSum') // 获取用户的收藏总数目
+const getCommentSumAndCollectionSum = axiosGet('/getCommentSumAndCollectionSum') // 获取用户的评论总数目
 const getCardData = axiosGet('/getCardData') // 获取数据列表
 const getCardDetail = axiosGet('/getCardDetail') // 获取单条数据详情
 const postComment = axiosPost('/postComment') // 添加评论
 const getRoleList = axiosGet('/getRoleList') // 获取权限角色列表
-const uploadFileUrl = BASE_URL_MAP[process.env.NODE_ENV] + '/dayEat/postUploadFile'
+const uploadFileUrl = BASE_URL_MAP[process.env.NODE_ENV] + '/dayEat/postUploadFile' // 上传图片
+const postPublish = axiosPost('/postPublish') // 用户发布信息
+const postLikeOrDislike = axiosPost('/postLikeOrDislike') // 喜欢或踩踩
+const getTopLike = axiosGet('/getTopLike') // 获取今日点赞最高的n款卡片
+const getSettingInfo = axiosGet('/getSettingInfo') // 获取设置表的配置信息
+const getAllUser = axiosGet('/getAllUser') // 管理员获取全部用户信息
 
 export {
   postLogin,
   postRegister,
   postChangeUserName,
   postChangePassword,
-  getCommentSum,
-  getCollectionSum,
+  getCommentSumAndCollectionSum,
   getCardData,
   getCardDetail,
   postComment,
   getRoleList,
-  uploadFileUrl
+  uploadFileUrl,
+  postPublish,
+  postLikeOrDislike,
+  getTopLike,
+  getSettingInfo,
+  getAllUser
 }

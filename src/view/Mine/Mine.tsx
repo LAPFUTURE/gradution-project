@@ -7,11 +7,14 @@ import Worker from './Worker'
 
 function Mine() {
   let userInfo = getters.GET_USERINFO()
-  let arr = [<Adm />, <Student />, <Worker />]
-  userInfo.role = 1
-  return(
-    (userInfo.role <= 1) ? arr[userInfo.role] : arr[2]
-  )
+  userInfo.role = -1
+  if ((userInfo.role === -1) || (userInfo.role === '-1')) {
+    return <Adm />
+  } else if((userInfo.role === 0) || (userInfo.role === '0')) {
+    return <Student/>
+  } else {
+    return (<Worker/>)
+  }
 }
 
 function Index() {

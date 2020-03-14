@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { uploadFileUrl } from '../../api'
-import { Upload, Modal, Input, Button } from 'antd'
+import { uploadFileUrl, postPublish } from '../../api'
+import { Upload, Modal, Input, Button, message } from 'antd'
 import { PlusOutlined, SendOutlined } from '@ant-design/icons'
 
 const { TextArea } = Input
@@ -35,6 +35,16 @@ export default function Public() {
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     }
   ])
+  let [name, setName] = useState('')
+  let [title, setTitle] = useState('')
+  let [description, setDescription] = useState('')
+  let [pic] = useState('')
+
+  let doPostPublish = async () => {
+    let res:any = await postPublish({name, title, description, pic})
+    let { code, msg } = res
+    code === 0 ? message.success(msg) : msg.error(msg)
+  }
 
   let handleCancel = () => setPreviewVisible(false)
 
@@ -72,17 +82,30 @@ export default function Public() {
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
         <div style={{ paddingLeft:24, paddingRight:24, paddingTop: 24 }}>
-          <Input addonBefore="品名" placeholder="取一个可爱的名字吧~"/>
+          <Input addonBefore="品名"
+            value={name}
+            onChange={(e) => {setName(e.target.value)}}
+            placeholder="取一个可爱的名字吧~"
+          />
           <br/>
           <br/>
-          <Input addonBefore="标题" placeholder="取一个响当当的标题~"/>
+          <Input addonBefore="标题"
+            value={title}
+            onChange={(e) => {setTitle(e.target.value)}}
+            placeholder="取一个响当当的标题，可以写店家名让更多人知道哦~"
+          />
           <br/>
           <br/>
-          <TextArea placeholder="来描述一下~" autoSize={{ minRows: 3, maxRows: 6 }} />
+          <TextArea
+            value={description}
+            onChange={(e) => {setDescription(e.target.value)}}
+            placeholder="来描述一下~"
+            autoSize={{ minRows: 3, maxRows: 6 }}
+          />
           <br/>
           <br/>
           <p className="text-center">
-            <Button type="primary">发布~ <SendOutlined/></Button>
+            <Button type="primary" onClick={() => {doPostPublish()}}>发布~ <SendOutlined/></Button>
           </p>
         </div>
       </div>
