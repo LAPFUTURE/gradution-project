@@ -1,9 +1,9 @@
 import React from 'react'
 import { getters } from '../../sessionStorage'
 import Login from '../Login/Login'
-import Adm from './Adm'
-import Student from './Student'
-import Worker from './Worker'
+import Adm from '../Adm/Adm'
+import Student from '../Student/Student'
+import Worker from '../Worker/Worker'
 
 function Mine() {
   let userInfo = getters.GET_USERINFO()
