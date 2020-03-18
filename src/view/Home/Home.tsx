@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { postHomePageCardData } from '../../api'
+import { postHomePageCardData, postSearch } from '../../api'
 import { Col, Row,Input } from 'antd'
 import { useMount } from 'react-use'
 import SelfCard from '../../components/SelfCard/SelfCard'
@@ -9,11 +9,9 @@ const { Search } = Input
 
 export default function Home() {
   let [cardData, setCardData] = useState<any>([])
-  let [searchWord] = useState('')
 
   useMount(async () => {
     let result:any = await postHomePageCardData({
-      searchWord:'',
       page: 1
     })
     let { list } = result
@@ -21,14 +19,8 @@ export default function Home() {
   })
 
   let doSearch = async (value:string) => {
-    let res:any = await postHomePageCardData({searchWord, page: 1})
+    let res:any = await postSearch({search: value})
     let { list } = res
-    if (list.length) {
-      list = list.map((item:any) => {
-        item.pic = item.pic.split(',')
-        return item
-      })
-    }
     setCardData(list)
   }
 

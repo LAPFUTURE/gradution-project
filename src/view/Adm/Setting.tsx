@@ -9,17 +9,10 @@ interface Item {
   name: string;
   age: number;
   address: string;
+  value: string;
+  mean: string;
 }
 
-const originData: Item[] = [];
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
   dataIndex: string;
@@ -71,7 +64,6 @@ const EditableTable = () => {
 
   useMount(async () => {
     let res:any = await getSettingInfo()
-    console.log(res)
     let arr:any = []
     let keySettingInfo = Object.keys(res.settingInfo)
     for(let i of keySettingInfo) {
@@ -93,7 +85,6 @@ const EditableTable = () => {
   const save = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as Item;
-
       const newData = [...data];
       const index = newData.findIndex(item => key === item.key);
       if (index > -1) {
@@ -103,12 +94,15 @@ const EditableTable = () => {
           ...row,
         });
         console.log(item, row)
-        postChangeSettingInfo({id:item.id, value:item.value, mean: item.mean})
+        postChangeSettingInfo({id:item.id, value:row.value, mean: row.mean})
         .then((res:any) => {
-          console.log(res)
-          setData(newData);
-          setEditingKey('');
-          message.success('保存成功~')
+          if (res.code === 0) {
+            setData(newData);
+            setEditingKey('');
+            message.success('保存成功~')
+          } else {
+            message.error(res.msg)
+          }
         })
       } else {
         newData.push(row);

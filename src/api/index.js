@@ -72,6 +72,7 @@ const postChangeSettingInfo = axiosPost('/postChangeSettingInfo') // 获取设�
 const getAllUser = axiosGet('/getAllUser') // 管理员获取全部用户信息
 const postNoticeAll = axiosPost('/postNoticeAll') // 获取所有公告
 const postNotice = axiosPost('/postNotice') // 获取最新的公告
+const postSearch = axiosPost('/postSearch') // 搜索
 
 export {
   postLogin,
@@ -91,5 +92,6 @@ export {
   postChangeSettingInfo,
   getAllUser,
   postNoticeAll,
-  postNotice
+  postNotice,
+  postSearch
 }

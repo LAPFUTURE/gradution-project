@@ -76,7 +76,10 @@ export default function Index(props: { data: cardData }) {
                 ]}
             >
               <Meta
-              title={data.name + data.title}
+              title={ <p className="space-around">
+                <Tag> {data.name} </Tag>
+                <Tag> {data.title} </Tag>
+              </p>}
               description={<p className="ellipsis">{data.description}</p>}
               />
             </Card>

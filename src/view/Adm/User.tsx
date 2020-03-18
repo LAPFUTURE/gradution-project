@@ -71,15 +71,7 @@ const EditableTable = () => {
 
   useMount(async () => {
     let res:any = await getAllUser()
-    console.log(res)
-    let arr:any = []
-    let keyAllUser = Object.keys(res.allUser)
-    for(let users of keyAllUser) {
-      res.allUser[users].forEach((user:any) => {
-        arr.push(user)
-      })
-    }
-    setData(arr)
+    setData(res.allUser)
   })
   const isEditing = (record: Item) => record.key === editingKey;
 
@@ -120,7 +112,7 @@ const EditableTable = () => {
     {
       title: '昵称',
       dataIndex: 'user_name',
-      width: '25%',
+      width: '18%',
       editable: false,
     },
     {
@@ -138,7 +130,7 @@ const EditableTable = () => {
     {
       title: '注册时间',
       dataIndex: 'register_time',
-      width: '25%',
+      width: '32%',
       editable: false,
     },
     // {
