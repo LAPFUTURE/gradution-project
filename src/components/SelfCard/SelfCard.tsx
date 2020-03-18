@@ -11,7 +11,7 @@ interface cardData {
   name: string,
   title: string,
   userInfo: any,
-  pic: Array<string>,
+  pic: string,
   description: string,
   like: number,
   dislike: number
@@ -23,7 +23,7 @@ export default function Index(props: { data: cardData }) {
     } 
     if (data.dislike > 99 || data.dislike < 0) {
       data.dislike = 90
-    } 
+    }
     let [like, setLike] = useState<number>(data.like)
     let [dislike, setDislike] = useState<number>(data.dislike)
     let [roleDetail] = useState(data.userInfo.roleDetail)
@@ -50,7 +50,7 @@ export default function Index(props: { data: cardData }) {
                 cover={
                   <img
                     alt="example"
-                    src={ 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png' || data.pic[0] }
+                    src={ data.pic.split(',')[0] }
                   />
                 }
                 actions={[

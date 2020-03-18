@@ -2,6 +2,7 @@ import React from 'react'
 import Notice from './Notice'
 import BaseInfo from './BaseInfo'
 import User from './User'
+import Setting from './Setting'
 import { Tabs } from 'antd'
 
 const { TabPane } = Tabs
@@ -11,7 +12,7 @@ export default function Adm() {
     { tabName:'基本信息', value: <BaseInfo /> },
     { tabName:'管理公告', value: <Notice/> },
     { tabName:'管理用户', value: <User /> },
-    { tabName:'管理配置', value: <div>管理配置</div>},
+    { tabName:'管理配置', value: <Setting />},
     ]
 
   return (

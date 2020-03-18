@@ -1,7 +1,8 @@
 import React from 'react'
-
-export default function Notice() {
+export default function() {
   return (
-    <div>Notice</div>
+    <div>
+      notice
+    </div>
   )
 }

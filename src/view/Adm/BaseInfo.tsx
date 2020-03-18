@@ -32,7 +32,7 @@ export default function BaseInfo() {
     }
   }
   return (
-    <div style={{ paddingRight: 24 }}>
+    <div style={{ paddingRight: 12 }}>
       <div
         className="text-center"
         style={{ marginBottom: 24 }}>

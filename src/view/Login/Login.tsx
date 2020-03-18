@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input, Tooltip, Card, Button, Select, message } from 'antd'
+import { Input, Tooltip, Card, Button, Select, message, Tag } from 'antd'
 import { InfoCircleOutlined, UserOutlined, KeyOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { postLogin, getRoleList } from '../../api/index'
@@ -13,7 +13,7 @@ function Login(props:any) {
   let { history } = props
   let [account, setAccount] = useState('')
   let [password, setPassword] = useState('')
-  let [role, setRole] = useState('1')
+  let [role, setRole] = useState('0')
   let [roleList,setRoleList] = useState([])
 
   let goRegister = () => {
@@ -26,19 +26,16 @@ function Login(props:any) {
     }
     let res:any = await postLogin({account,password,role})
     let {code, msg, token, userInfo} = res
-    if(code !== 0) {
+    if(code === 0) {
       setters.SET_TOKEN(token)
       setters.SET_USERINFO(userInfo)
       message.success(msg)
       history.push('/mineLogined')
-    } else {
-      message.error(msg)
     }
   }
   useMount(() => {
     getRoleList().then((res:any) => {
-      let { list } = res
-      setRoleList(list)
+      setRoleList(res)
     })
   })
 
@@ -69,8 +66,8 @@ function Login(props:any) {
             onChange={(value) => {setRole(value)}}
             >
             {
-              roleList.map((item:any) => (
-                <Option value={item.role} key={item.role}>{item.name}</Option>
+              roleList.length && roleList.map((item:any) => (
+                <Option value={item.role} key={item.role}><Tag color={item.color}>{item.name}</Tag></Option>
               ))
             }
             </Select>

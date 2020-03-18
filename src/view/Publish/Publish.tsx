@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { getters } from '../../sessionStorage'
 import { uploadFileUrl, postPublish } from '../../api'
 import { Upload, Modal, Input, Button, message } from 'antd'
 import { PlusOutlined, SendOutlined } from '@ant-design/icons'
@@ -16,34 +17,31 @@ function getBase64(file:any) {
 export default function Public() {
   let [previewVisible, setPreviewVisible] = useState(false)
   let [previewImage, setPreviewImage] = useState('')
-  let [fileList, setFileList] = useState<any>([{
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }
-  ])
+  let [fileList, setFileList] = useState<any>([])
   let [name, setName] = useState('')
   let [title, setTitle] = useState('')
   let [description, setDescription] = useState('')
-  let [pic] = useState('')
 
   let doPostPublish = async () => {
+    let arr:any = []
+    fileList.forEach((item:any) => {
+      if (item.status === 'done') {
+        arr.push(item.response.data.url)
+      }
+    })
+    console.log('rr.join():', arr.join(','))
+    if (!arr.length) {
+      message.warning('请上传图片~')
+      return false
+    }
+    if (!name || !title || !description) {
+      message.warning('检查输入框~')
+      return false
+    }
+    let pic = arr.join(',')
     let res:any = await postPublish({name, title, description, pic})
     let { code, msg } = res
-    code === 0 ? message.success(msg) : msg.error(msg)
+    code === 0 ? message.success('发布成功') : msg.error(msg)
   }
 
   let handleCancel = () => setPreviewVisible(false)
@@ -52,12 +50,15 @@ export default function Public() {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj)
     }
-
+    console.log('file.preview:', file.preview)
     setPreviewImage(file.url || file.preview)
     setPreviewVisible(true)
   };
 
   let handleChange = (a:any) => {
+    if (a.file.status === 'done') {
+      console.log('a.fileList:', a.fileList)
+    }
     setFileList(a.fileList)
   }
     const uploadButton = (
@@ -66,15 +67,22 @@ export default function Public() {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+    const picProps:any = {
+      action:uploadFileUrl,
+      name: 'file',
+      listType: "picture-card",
+      headers: {
+        Authorization: getters.GET_TOKEN(),
+      },
+      fileList: fileList,
+      onPreview: handlePreview,
+      onChange: handleChange
+    }
     return (
       <div style={{ marginTop: 24 }}>
         <Upload
           className="space-around"
-          action={uploadFileUrl}
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
+          {...picProps}
         >
           {fileList.length >= 3 ? null : uploadButton}
         </Upload>

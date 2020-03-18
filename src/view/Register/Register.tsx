@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input, Tooltip, Card, Button, Select, message } from 'antd'
+import { Input, Tooltip, Card, Button, Select, message, Tag } from 'antd'
 import { InfoCircleOutlined, UserOutlined, KeyOutlined, LogoutOutlined, LoginOutlined, SmileOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { postRegister, getRoleList } from '../../api/index'
@@ -18,26 +18,29 @@ function Register(props:any) {
     let [roleList,setRoleList] = useState([])
 
     let doRegister = async () => {
-        if(![userName, account, password, rePassword].every(Boolean)) {
-            message.warning('请检查输入框~')
-            return false
-        } else if(password !== rePassword) {
-            message.warning('两次密码输入不一致~')
-            return false
-        }
-        let res:any = await postRegister({account, password, role})
-        let {code, msg} = res
-        code === 0 ? message.success(msg) : message.error(msg)
+      if(![userName, account, password, rePassword].every(Boolean)) {
+        message.warning('请检查输入框~')
+        return false
+      } else if(password !== rePassword) {
+        message.warning('两次密码输入不一致~')
+        return false
+      }
+      console.log({account, password, role})
+      let res:any = await postRegister({userName, account, password, role})
+      let {code, errMsg} = res
+      code === 0 ? message.success(errMsg) : message.error(errMsg)
     }
     let goLogin = () => {
-        history.push('/login')
+      history.push('/login')
     }
 
     useMount(() => {
-        getRoleList().then((res:any) => {
-            let { list } = res
-            setRoleList(list)
-        })
+      getRoleList().then((res:any) => {
+          let list = res.filter((item:any) => {
+            return Number(item.role) >= 0
+          })
+          setRoleList(list)
+      })
     })
 
     return (
@@ -87,7 +90,7 @@ function Register(props:any) {
                         }}>
                             {
                                 roleList.map((item:any) => (
-                                    <Option value={item.role} key={item.role}>{item.name}</Option>
+                                    <Option value={item.role} key={item.role}><Tag color={item.color}>{item.name}</Tag></Option>
                                 ))
                             }
                         </Select>

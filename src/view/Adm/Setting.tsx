@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { getAllUser } from '../../api'
+import { getSettingInfo, postChangeSettingInfo } from '../../api'
 import './User.css'
-import { Table, Input, InputNumber, Popconfirm, Form, Button } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, message } from 'antd';
 import { useMount } from 'react-use';
 
 interface Item {
@@ -70,14 +70,12 @@ const EditableTable = () => {
   const [editingKey, setEditingKey] = useState('');
 
   useMount(async () => {
-    let res:any = await getAllUser()
+    let res:any = await getSettingInfo()
     console.log(res)
     let arr:any = []
-    let keyAllUser = Object.keys(res.allUser)
-    for(let users of keyAllUser) {
-      res.allUser[users].forEach((user:any) => {
-        arr.push(user)
-      })
+    let keySettingInfo = Object.keys(res.settingInfo)
+    for(let i of keySettingInfo) {
+      arr.push(res.settingInfo[i])
     }
     setData(arr)
   })
@@ -104,8 +102,14 @@ const EditableTable = () => {
           ...item,
           ...row,
         });
-        setData(newData);
-        setEditingKey('');
+        console.log(item, row)
+        postChangeSettingInfo({id:item.id, value:item.value, mean: item.mean})
+        .then((res:any) => {
+          console.log(res)
+          setData(newData);
+          setEditingKey('');
+          message.success('保存成功~')
+        })
       } else {
         newData.push(row);
         setData(newData);
@@ -118,53 +122,47 @@ const EditableTable = () => {
 
   const columns = [
     {
-      title: '昵称',
-      dataIndex: 'user_name',
+      title: 'key',
+      dataIndex: 'key',
       width: '25%',
       editable: false,
     },
     {
-      title: '账号',
-      dataIndex: 'account',
+      title: '值',
+      dataIndex: 'value',
       width: '25%',
-      editable: false,
+      editable: true,
     },
     {
-      title: '登录时间',
-      dataIndex: 'login_time',
+      title: '含义',
+      dataIndex: 'mean',
       width: '25%',
-      editable: false,
+      editable: true,
     },
     {
-      title: '注册时间',
-      dataIndex: 'register_time',
-      width: '25%',
-      editable: false,
+      title: 'operation',
+      dataIndex: 'operation',
+      width: '30%',
+      render: (_: any, record: Item) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <span onClick={() => save(record.key)} style={{ color: '#1890ff', marginRight: 8 }}>
+              保存
+            </span>
+            <Popconfirm title="确定要取消吗?" onConfirm={cancel}>
+              <span style={{ color: '#1890ff' }}>取消</span>
+            </Popconfirm>
+          </span>
+        ) : (
+            <Button size="small" type="primary"
+              disabled={editingKey !== ''}
+              onClick={() => edit(record)}>
+              编辑
+            </Button>
+        );
+      },
     },
-    // {
-    //   title: 'operation',
-    //   dataIndex: 'operation',
-    //   width: '30%',
-    //   render: (_: any, record: Item) => {
-    //     const editable = isEditing(record);
-    //     return editable ? (
-    //       <span>
-    //         <span onClick={() => save(record.key)} style={{ color: '#1890ff', marginRight: 8 }}>
-    //           保存
-    //         </span>
-    //         <Popconfirm title="确定要取消吗?" onConfirm={cancel}>
-    //           <span style={{ color: '#1890ff' }}>取消</span>
-    //         </Popconfirm>
-    //       </span>
-    //     ) : (
-    //         <Button size="small" type="primary"
-    //           disabled={editingKey !== ''}
-    //           onClick={() => edit(record)}>
-    //           编辑
-    //         </Button>
-    //     );
-    //   },
-    // },
   ];
 
   const mergedColumns = columns.map(col => {

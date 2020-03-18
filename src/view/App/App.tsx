@@ -15,6 +15,7 @@ import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Write from '../Write/Write'
 import Publish from '../Publish/Publish'
+import Notice from '../Notice/Notice'
 import './App.css'
 
 function App(props:any) {
@@ -115,6 +116,9 @@ function App(props:any) {
       </Route>
       <Route path="/publish">
         <Publish />
+      </Route>
+      <Route path="/notice">
+        <Notice />
       </Route>
       <Route path="/">
         <Home />

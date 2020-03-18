@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import './Write.css'
 import { Carousel } from 'antd'
 import { useMount } from 'react-use'
-import { getCardDetail, postComment } from '../../api'
+import { postCardDetail, postComment } from '../../api'
 import { SendOutlined } from '@ant-design/icons'
 
 const { Search } = Input
@@ -16,8 +16,8 @@ export default function Recommend(props:any) {
   let [loading, setLoading] = useState(false)
   let [hasMore, setHasmore] = useState(true)
   let [comments, setComments] = useState([])
-  let [title, setTitle] = useState('')
-  let [description, setDescription] = useState('')
+  let [titles, setTitles] = useState('')
+  let [descriptions, setDescriptions] = useState('')
   let [page, setPage] = useState(1)
   let [pageSize] = useState(10)
 
@@ -25,13 +25,13 @@ export default function Recommend(props:any) {
     if (hasMore) {
       let data  = comments
       setLoading(true)
-      getCardDetail({id, page, pageSize}).then((res:any) => {
+      postCardDetail({id, page, pageSize}).then((res:any) => {
         let { pic, name, comments, title, description } = res
         setPic(pic)
         setName(name)
         setComments(data.concat(comments))
-        setTitle(title)
-        setDescription(description)
+        setTitles(title)
+        setDescriptions(description)
         setHasmore(true)
         setLoading(false)
         if (comments.length < pageSize) {
@@ -44,7 +44,7 @@ export default function Recommend(props:any) {
   }
   let doPostComment = async (comment:any) => {
     if (comment) {
-      let res:any = await postComment({id,comment})
+      let res:any = await postComment({cardid:id, comment})
       let { code, msg, detail } = res
       if (code === 0) {
           let temp = JSON.parse(JSON.stringify(comments))
@@ -59,10 +59,12 @@ export default function Recommend(props:any) {
     }
   }
   useMount(() => {
-    getCardDetail({id, page, pageSize}).then((res:any) => {
-      let { pic, name, comments } = res
+    postCardDetail({id, page, pageSize}).then((res:any) => {
+      let { pic, name, comments, title, description } = res
       console.log(res)
-      setPic(pic)
+      setTitles(title)
+      setDescriptions(description)
+      setPic(pic.split(','))
       setName(name)
       setComments(comments)
       setPage(page + 1)
@@ -70,12 +72,12 @@ export default function Recommend(props:any) {
   })
 
     return (
-        <div className="mt-container">
+        <div style={{ margin: '14px 10px' }}>
             <h2 className="text-center">{name}</h2>
-            <Carousel  style={{height: '200px', width: '100vw', minHeight: '200px'}}>
+            <Carousel autoplay style={{height: '200px', width: '100vw', minHeight: '200px'}}>
             {/* autoplay */}
                 {
-                    pic.map((url, index) => {
+                    pic.length && pic.map((url, index) => {
                         return (
                             <div key={index}>
                                 <div className="full-image margin-auto"
@@ -88,8 +90,8 @@ export default function Recommend(props:any) {
                     })
                 }
             </Carousel>
-            <h2>{title}</h2>
-            <p>{description}</p>
+            <h2>{titles}</h2>
+            <p>{descriptions}</p>
             <br/>
             <Search placeholder="input search text"
               onSearch={(comment) => { doPostComment(comment) }}

@@ -7,10 +7,11 @@ import Worker from '../Worker/Worker'
 
 function Mine() {
   let userInfo = getters.GET_USERINFO()
-  userInfo.role = -1
-  if ((userInfo.role === -1) || (userInfo.role === '-1')) {
+  console.log()
+  let role = userInfo.roleDetail.role
+  if (role === -1) {
     return <Adm />
-  } else if((userInfo.role === 0) || (userInfo.role === '0')) {
+  } else if(role === 0) {
     return <Student/>
   } else {
     return (<Worker/>)

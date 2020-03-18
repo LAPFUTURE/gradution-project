@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Avatar, Card, Button, Modal, Input, Tooltip, message, Badge } from 'antd'
 import { getters, setters } from '../../sessionStorage'
 import { postChangeUserName, postChangePassword, getCommentSumAndCollectionSum } from '../../api' 
-import { SendOutlined, LikeOutlined, SettingFilled, CommentOutlined, SmileOutlined, InfoCircleOutlined, KeyOutlined, EditOutlined } from '@ant-design/icons'
+import { SendOutlined, LikeOutlined, SettingFilled, CommentOutlined, SmileOutlined, InfoCircleOutlined, KeyOutlined, EditOutlined, BookOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { useMount } from 'react-use'
 
@@ -34,7 +34,7 @@ function Student(props:any) {
         userInfo.userName = userName
         setters.SET_USERINFO(userInfo)
         setOldUserName(userName)
-        message.success(msg)
+        message.success('修改成功~')
       } else {
         message.error(msg)
       }
@@ -85,17 +85,22 @@ return (
       <p style={{ textAlign: 'center' }}>
         <Button type="primary" onClick={() => {history.push('/publish')}}>我要发布 <SendOutlined /></Button>
       </p>
-      <p style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', marginBottom: 14 }}>
         <Badge count={ collectionSum } style={{ backgroundColor: '#52c41a' }}>
           <Button type="primary">我的收藏 <LikeOutlined /></Button>
         </Badge>
-      </p>
-      <p style={{ textAlign: 'center' }}>
+      </div>
+      <div style={{ textAlign: 'center', marginBottom: 14 }}>
         <Badge count={ commentSum } style={{ backgroundColor: '#52c41a' }}>
           <Button type="primary">我的评论 <CommentOutlined /></Button>
         </Badge>
+      </div>
+      <p style={{ textAlign: 'center' }}>
+        <Button type="primary" onClick={()=>{history.push('/notice')}}>公告历史 <BookOutlined /></Button>
       </p>
-      <p style={{ textAlign: 'center' }}><Button type="primary" onClick={()=>{setPasswordVisible(true)}}>修改密码 <SettingFilled /></Button></p>
+      <p style={{ textAlign: 'center' }}>
+        <Button type="primary" onClick={()=>{setPasswordVisible(true)}}>修改密码 <SettingFilled /></Button>
+      </p>
     </Card>
     <Modal
       centered
