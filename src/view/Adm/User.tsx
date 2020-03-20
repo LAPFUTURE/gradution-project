@@ -73,38 +73,33 @@ const EditableTable = () => {
     let res:any = await getAllUser()
     setData(res.allUser)
   })
-  const isEditing = (record: Item) => record.key === editingKey;
-
-  const edit = (record: Item) => {
-    form.setFieldsValue({ ...record });
-    setEditingKey(record.key);
-  };
+  const isEditing = (record: Item) => record.key === editingKey
 
   const cancel = () => {
-    setEditingKey('');
+    setEditingKey('')
   };
 
   const save = async (key: React.Key) => {
     try {
-      const row = (await form.validateFields()) as Item;
+      const row = (await form.validateFields()) as Item
 
       const newData = [...data];
-      const index = newData.findIndex(item => key === item.key);
+      const index = newData.findIndex(item => key === item.key)
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
           ...item,
           ...row,
-        });
-        setData(newData);
-        setEditingKey('');
+        })
+        setData(newData)
+        setEditingKey('')
       } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey('');
+        newData.push(row)
+        setData(newData)
+        setEditingKey('')
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.log('Validate Failed:', errInfo)
     }
   };
 
@@ -132,36 +127,12 @@ const EditableTable = () => {
       dataIndex: 'register_time',
       width: '32%',
       editable: false,
-    },
-    // {
-    //   title: 'operation',
-    //   dataIndex: 'operation',
-    //   width: '30%',
-    //   render: (_: any, record: Item) => {
-    //     const editable = isEditing(record);
-    //     return editable ? (
-    //       <span>
-    //         <span onClick={() => save(record.key)} style={{ color: '#1890ff', marginRight: 8 }}>
-    //           保存
-    //         </span>
-    //         <Popconfirm title="确定要取消吗?" onConfirm={cancel}>
-    //           <span style={{ color: '#1890ff' }}>取消</span>
-    //         </Popconfirm>
-    //       </span>
-    //     ) : (
-    //         <Button size="small" type="primary"
-    //           disabled={editingKey !== ''}
-    //           onClick={() => edit(record)}>
-    //           编辑
-    //         </Button>
-    //     );
-    //   },
-    // },
-  ];
+    }
+  ]
 
   const mergedColumns = columns.map(col => {
     if (!col.editable) {
-      return col;
+      return col
     }
     return {
       ...col,
@@ -172,8 +143,8 @@ const EditableTable = () => {
         title: col.title,
         editing: isEditing(record),
       }),
-    };
-  });
+    }
+  })
 
   return (
     <Form form={form} component={false}>
@@ -194,7 +165,7 @@ const EditableTable = () => {
         }}
       />
     </Form>
-  );
-};
+  )
+}
 
 export default EditableTable

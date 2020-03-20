@@ -61,7 +61,6 @@ export default function Recommend(props:any) {
   useMount(() => {
     postCardDetail({id, page, pageSize}).then((res:any) => {
       let { pic, name, comments, title, description } = res
-      console.log(res)
       setTitles(title)
       setDescriptions(description)
       setPic(pic.split(','))

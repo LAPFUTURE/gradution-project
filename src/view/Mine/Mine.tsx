@@ -7,7 +7,6 @@ import Worker from '../Worker/Worker'
 
 function Mine() {
   let userInfo = getters.GET_USERINFO()
-  console.log()
   let role = userInfo.roleDetail.role
   if (role === -1) {
     return <Adm />

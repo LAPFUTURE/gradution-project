@@ -2,17 +2,24 @@ import React, { useState } from 'react'
 import { Card, Button, Modal, Input, Tooltip, message, Avatar } from 'antd'
 import { getters, setters } from '../../sessionStorage'
 
-import { SmileOutlined, InfoCircleOutlined, EditOutlined } from '@ant-design/icons'
+import { SmileOutlined, InfoCircleOutlined, EditOutlined, LoginOutlined } from '@ant-design/icons'
 import { postChangeUserName } from '../../api'
+import { withRouter } from 'react-router-dom'
 
-export default function BaseInfo() {
+function BaseInfo(props:any) {
+  let { history } = props
   let userInfo = getters.GET_USERINFO()
   let [avatar] = useState('https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png')
 
   let [oldUserName, setOldUserName] = useState(userInfo.userName)
   let [userNameVisible, setUserNameVisible] = useState(false)
   let [userName, setUserName] = useState('')
-  
+
+  let loginOut = () => {
+    setters.SET_CLEAR()
+    message.success('退出账号成功~')
+    history.push('/')
+  }
   let userNameHandleOk = async () => {
     if(userName) {
       let res:any = await postChangeUserName({userName})
@@ -40,11 +47,17 @@ export default function BaseInfo() {
       </div>
       <Card hoverable
         title={`Hello,${oldUserName}`}
+        style={{ maxWidth:'80vw',margin: '0 auto' }}
         className="text-center">
-        <Button size="small"
-          onClick={()=>{setUserNameVisible(true)}}>
-          修改昵称 <EditOutlined />
-        </Button>
+        <p style={{ textAlign: 'center' }}>
+          <Button
+            onClick={()=>{setUserNameVisible(true)}}>
+            修改昵称 <EditOutlined />
+          </Button>
+        </p>
+        <p style={{ textAlign: 'center' }}>
+          <Button type="primary" onClick={()=>{loginOut()}}>退出账号 <LoginOutlined /></Button>
+        </p>
       </Card>
       <Modal
         centered
@@ -68,3 +81,5 @@ export default function BaseInfo() {
     </div>
   )
 }
+
+export default withRouter(BaseInfo)

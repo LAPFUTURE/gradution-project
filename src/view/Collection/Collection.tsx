@@ -1,34 +1,39 @@
 import React, { useState } from 'react'
-import { getRecommandPageCardData } from '../../api'
+import { postColleage } from '../../api'
+import { useMount } from 'react-use'
 import { Row, Col } from 'antd'
 import SelfCard from '../../components/SelfCard/SelfCard'
-import { useMount } from 'react-use'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 
-export default function Recommend() {
+
+export default function Comment() {
   let [cardDataLeft, setCardDataLeft] = useState<any>([])
   let [cardDataRight, setCardDataRight] = useState<any>([])
-  useMount(async () => {
-    let result:any = await getRecommandPageCardData()
-    let { list } = result
-    if (list && list.length) {
-      let left:any = []
-      let right:any = []
-      for(let i = 0, length = list.length; i < length; i++) {
-        if (i%2 ===0) {
-          left.push(list[i])
-        } else {
-          right.push(list[i])
+
+  let doGetColleage = () => {
+    postColleage({page: 1, pageSize: 10}).then((res:any) => {
+      let { list } = res
+      if (list && list.length) {
+        let left:any = []
+        let right:any = []
+        for(let i = 0, length = list.length; i < length; i++) {
+          if (i%2 ===0) {
+            left.push(list[i])
+          } else {
+            right.push(list[i])
+          }
         }
+        setCardDataLeft(left)
+        setCardDataRight(right)
       }
-      setCardDataLeft(left)
-      setCardDataRight(right)
-    }
+    })
+  }
+
+  useMount(() => {
+    doGetColleage()
   })
   return (
-    <div style={{ marginTop: 14 }}>
-      {
-        cardDataLeft.length?
+    <div>
+       <p className="text-center" style={{ marginTop: 14 }}>我的收藏</p>
         <Row>
           <Col span={12}>
             {
@@ -49,9 +54,6 @@ export default function Recommend() {
             }
           </Col>
         </Row>
-        :
-        <div className="text-center"><ExclamationCircleOutlined />暂无数据~</div>
-      }
-    </div>
+      </div>
   )
 }

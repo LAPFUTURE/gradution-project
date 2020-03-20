@@ -93,7 +93,6 @@ const EditableTable = () => {
           ...item,
           ...row,
         });
-        console.log(item, row)
         postChangeSettingInfo({id:item.id, value:row.value, mean: row.mean})
         .then((res:any) => {
           if (res.code === 0) {
@@ -115,24 +114,6 @@ const EditableTable = () => {
   };
 
   const columns = [
-    {
-      title: 'key',
-      dataIndex: 'key',
-      width: '25%',
-      editable: false,
-    },
-    {
-      title: '值',
-      dataIndex: 'value',
-      width: '25%',
-      editable: true,
-    },
-    {
-      title: '含义',
-      dataIndex: 'mean',
-      width: '25%',
-      editable: true,
-    },
     {
       title: 'operation',
       dataIndex: 'operation',
@@ -157,6 +138,25 @@ const EditableTable = () => {
         );
       },
     },
+    {
+      title: 'key',
+      dataIndex: 'key',
+      width: '25%',
+      editable: false,
+    },
+    {
+      title: '值',
+      dataIndex: 'value',
+      width: '25%',
+      editable: true,
+    },
+    {
+      title: '含义',
+      dataIndex: 'mean',
+      width: '25%',
+      editable: true,
+    },
+    
   ];
 
   const mergedColumns = columns.map(col => {

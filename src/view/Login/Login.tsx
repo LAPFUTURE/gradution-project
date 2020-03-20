@@ -31,6 +31,8 @@ function Login(props:any) {
       setters.SET_USERINFO(userInfo)
       message.success(msg)
       history.push('/mineLogined')
+    } else {
+      message.error(msg)
     }
   }
   useMount(() => {

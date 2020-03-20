@@ -25,7 +25,6 @@ function Register(props:any) {
         message.warning('两次密码输入不一致~')
         return false
       }
-      console.log({account, password, role})
       let res:any = await postRegister({userName, account, password, role})
       let {code, errMsg} = res
       code === 0 ? message.success(errMsg) : message.error(errMsg)

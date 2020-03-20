@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { getters } from '../sessionStorage'
-// import { message } from 'antd'
+import { getters, setters } from '../sessionStorage'
+import { message } from 'antd'
 
 const BASE_URL_MAP = {
   deploy: 'http://localhost',
@@ -36,9 +36,13 @@ axios.interceptors.request.use( // 发送请求前拦截请求,将TOKEN加入到
 );
 
 axios.interceptors.response.use(function (res) { // 响应拦截器
-  // if (res.data.errno !== 0) { // 失败,token失效等
-  //  message.error(res.data.errmsg)
-  // }
+  if (res.data.errno !== 0) { // 失败,token失效等
+    message.error(res.data.errmsg)
+    if (res.data.errmsg === '身份验证失败，请重新登录') {
+      window.location.href = '/login'
+    }
+    return Promise.reject({msg: res.data.errmsg, code: res.data.errno})
+  }
   return res.data.data // 成功
 })
 
@@ -72,7 +76,16 @@ const postChangeSettingInfo = axiosPost('/postChangeSettingInfo') // 获取设�
 const getAllUser = axiosGet('/getAllUser') // 管理员获取全部用户信息
 const postNoticeAll = axiosPost('/postNoticeAll') // 获取所有公告
 const postNotice = axiosPost('/postNotice') // 获取最新的公告
+const postCreateNotice = axiosPost('/postCreateNotice') // 创建公告
 const postSearch = axiosPost('/postSearch') // 搜索
+const postCommentAll = axiosPost('/postCommentAll') // 用户获得自身所有评论
+const postCommentDelete = axiosPost('/postCommentDelete') // 用户删除评论
+const postColleage = axiosPost('/postColleage') // 用户获取收藏
+const postCardAll = axiosPost('/postCardAll') // 用户获取所有卡片
+const postCardDelete = axiosPost('/postCardDelete') // 用户删除卡片
+const postCardUser = axiosPost('/postCardUser') // 用户获得其发布的卡片
+const postNoticeUpdate = axiosPost('/postNoticeUpdate') // 更新公告
+const postNoticeDelete = axiosPost('/postNoticeDelete') // 删除公告
 
 export {
   postLogin,
@@ -93,5 +106,14 @@ export {
   getAllUser,
   postNoticeAll,
   postNotice,
-  postSearch
+  postCreateNotice,
+  postSearch,
+  postCommentAll,
+  postCommentDelete,
+  postColleage,
+  postCardAll,
+  postCardDelete,
+  postCardUser,
+  postNoticeUpdate,
+  postNoticeDelete,
 }

@@ -29,7 +29,6 @@ export default function Public() {
         arr.push(item.response.data.url)
       }
     })
-    console.log('rr.join():', arr.join(','))
     if (!arr.length) {
       message.warning('请上传图片~')
       return false
@@ -50,15 +49,11 @@ export default function Public() {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj)
     }
-    console.log('file.preview:', file.preview)
     setPreviewImage(file.url || file.preview)
     setPreviewVisible(true)
   };
 
   let handleChange = (a:any) => {
-    if (a.file.status === 'done') {
-      console.log('a.fileList:', a.fileList)
-    }
     setFileList(a.fileList)
   }
     const uploadButton = (

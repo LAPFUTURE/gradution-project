@@ -18,6 +18,9 @@ const setters = {
   },
   SET_USERINFO: (USERINFO) => {
     sessionStorage.setItem(keys['USERINFO'], JSON.stringify(USERINFO))
+  },
+  SET_CLEAR: () => {
+    sessionStorage.clear()
   }
 }
 

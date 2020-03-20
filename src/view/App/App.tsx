@@ -16,13 +16,15 @@ import Register from '../Register/Register'
 import Write from '../Write/Write'
 import Publish from '../Publish/Publish'
 import Notice from '../Notice/Notice'
+import Comment from '../Comment/Comment'
+import Collection from '../Collection/Collection'
+import Mypublish from '../MyPublish/Mypublish'
 import './App.css'
 
 function App(props:any) {
   let [current, setCurrent] = useState('home')
 
   useMount(() => {
-    console.log('mounted')
     document.addEventListener('touchmove', function(e) {
       e.preventDefault()
     })
@@ -119,6 +121,15 @@ function App(props:any) {
       </Route>
       <Route path="/notice">
         <Notice />
+      </Route>
+      <Route path="/comment">
+        <Comment />
+      </Route>
+      <Route path="/collection">
+        <Collection/>
+      </Route>
+      <Route path="/mypublish">
+        <Mypublish/>
       </Route>
       <Route path="/">
         <Home />

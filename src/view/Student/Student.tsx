@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Avatar, Card, Button, Modal, Input, Tooltip, message, Badge } from 'antd'
 import { getters, setters } from '../../sessionStorage'
 import { postChangeUserName, postChangePassword, getCommentSumAndCollectionSum } from '../../api' 
-import { SendOutlined, LikeOutlined, SettingFilled, CommentOutlined, SmileOutlined, InfoCircleOutlined, KeyOutlined, EditOutlined, BookOutlined } from '@ant-design/icons'
+import { SendOutlined, LikeOutlined, SettingFilled, CommentOutlined, SmileOutlined, InfoCircleOutlined, KeyOutlined, EditOutlined, BookOutlined, LoginOutlined, FileDoneOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { useMount } from 'react-use'
 
@@ -22,7 +22,11 @@ function Student(props:any) {
   let [passwordVisible, setPasswordVisible] = useState(false)
 
   let changeAvatar = () => {
-    console.log(123)
+  }
+  let loginOut = () => {
+    setters.SET_CLEAR()
+    message.success('退出账号成功~')
+    history.push('/')
   }
   let userNameHandleOk = async () => {
     if(userName) {
@@ -85,14 +89,17 @@ return (
       <p style={{ textAlign: 'center' }}>
         <Button type="primary" onClick={() => {history.push('/publish')}}>我要发布 <SendOutlined /></Button>
       </p>
+      <p style={{ textAlign: 'center' }}>
+        <Button type="primary" onClick={() => {history.push('/mypublish')}}>我的发布 <FileDoneOutlined /></Button>
+      </p>
       <div style={{ textAlign: 'center', marginBottom: 14 }}>
         <Badge count={ collectionSum } style={{ backgroundColor: '#52c41a' }}>
-          <Button type="primary">我的收藏 <LikeOutlined /></Button>
+          <Button type="primary" onClick={() => {history.push('/collection')}}>我的收藏 <LikeOutlined /></Button>
         </Badge>
       </div>
       <div style={{ textAlign: 'center', marginBottom: 14 }}>
         <Badge count={ commentSum } style={{ backgroundColor: '#52c41a' }}>
-          <Button type="primary">我的评论 <CommentOutlined /></Button>
+          <Button type="primary" onClick={() => {history.push('/comment')}}>我的评论 <CommentOutlined /></Button>
         </Badge>
       </div>
       <p style={{ textAlign: 'center' }}>
@@ -100,6 +107,9 @@ return (
       </p>
       <p style={{ textAlign: 'center' }}>
         <Button type="primary" onClick={()=>{setPasswordVisible(true)}}>修改密码 <SettingFilled /></Button>
+      </p>
+      <p style={{ textAlign: 'center' }}>
+        <Button type="primary" onClick={()=>{loginOut()}}>退出账号 <LoginOutlined /></Button>
       </p>
     </Card>
     <Modal
