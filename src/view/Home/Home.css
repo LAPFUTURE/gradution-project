@@ -1,9 +1,16 @@
 .head-example {
-    width: 32px;
-    height: 32px;
-    border-radius: 2px;
-    /* background: #eee; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  /* background: #eee; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-demo-infinite-container {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: auto;
+  padding: 8px 24px;
+  height: 85vh;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getAllUser } from '../../api'
 import './User.css'
-import { Table, Input, InputNumber, Popconfirm, Form, Button } from 'antd';
+import { Table, Input, InputNumber, Form } from 'antd';
 import { useMount } from 'react-use';
 
 interface Item {
@@ -77,30 +77,6 @@ const EditableTable = () => {
 
   const cancel = () => {
     setEditingKey('')
-  };
-
-  const save = async (key: React.Key) => {
-    try {
-      const row = (await form.validateFields()) as Item
-
-      const newData = [...data];
-      const index = newData.findIndex(item => key === item.key)
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        })
-        setData(newData)
-        setEditingKey('')
-      } else {
-        newData.push(row)
-        setData(newData)
-        setEditingKey('')
-      }
-    } catch (errInfo) {
-      console.log('Validate Failed:', errInfo)
-    }
   };
 
   const columns = [

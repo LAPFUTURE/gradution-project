@@ -25,9 +25,9 @@ function App(props:any) {
   let [current, setCurrent] = useState('home')
 
   useMount(() => {
-    document.addEventListener('touchmove', function(e) {
-      e.preventDefault()
-    })
+    // document.addEventListener('touchmove', function(e) {
+    //   e.preventDefault()
+    // },{ passive: false })
     let c:any = document.querySelector('#evanyou-canvas')
     let x = c.getContext('2d')
     let pr = window.devicePixelRatio || 1

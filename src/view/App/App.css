@@ -1,8 +1,8 @@
 /* .App {
 } */
-html{
+/* html{
   touch-action:none;
-}
+} */
 .menu-container {
   display: flex;
   justify-content: space-around;

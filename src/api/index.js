@@ -1,12 +1,17 @@
 import axios from 'axios'
-import { getters, setters } from '../sessionStorage'
+import { getters } from '../sessionStorage'
 import { message } from 'antd'
 
+message.config({
+  top: 150,
+  duration: 2,
+  maxCount: 3,
+});
 const BASE_URL_MAP = {
   deploy: 'http://localhost',
   // development: 'http://yapi.ascoder.cn/mock/32/dayEat',
   development: 'http://dayeatapi.connectyoume.top/dayEat',
-  production: 'http://localhost'
+  production: 'http://dayeatapi.connectyoume.top/dayEat'
 }
   
 function generateUrl(url) {
@@ -40,6 +45,8 @@ axios.interceptors.response.use(function (res) { // 响应拦截器
     message.error(res.data.errmsg)
     if (res.data.errmsg === '身份验证失败，请重新登录') {
       window.location.href = '/login'
+    } else if (res.data.errmsg === 'token不存在') {
+      message.error('您未登录~')
     }
     return Promise.reject({msg: res.data.errmsg, code: res.data.errno})
   }

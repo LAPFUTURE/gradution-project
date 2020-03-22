@@ -26,12 +26,8 @@ export default function Recommend(props:any) {
       let data  = comments
       setLoading(true)
       postCardDetail({id, page, pageSize}).then((res:any) => {
-        let { pic, name, comments, title, description } = res
-        setPic(pic)
-        setName(name)
+        let { comments } = res
         setComments(data.concat(comments))
-        setTitles(title)
-        setDescriptions(description)
         setHasmore(true)
         setLoading(false)
         if (comments.length < pageSize) {
@@ -63,7 +59,8 @@ export default function Recommend(props:any) {
       let { pic, name, comments, title, description } = res
       setTitles(title)
       setDescriptions(description)
-      setPic(pic.split(','))
+      let temp = pic.split(',')
+      setPic(temp)
       setName(name)
       setComments(comments)
       setPage(page + 1)
@@ -73,16 +70,19 @@ export default function Recommend(props:any) {
     return (
         <div style={{ margin: '14px 10px' }}>
             <h2 className="text-center">{name}</h2>
-            <Carousel autoplay style={{height: '200px', width: '100vw', minHeight: '200px'}}>
+            <Carousel  style={{height: '200px', width: '100vw', minHeight: '200px'}}>
             {/* autoplay */}
                 {
                     pic.length && pic.map((url, index) => {
                         return (
                             <div key={index}>
                                 <div className="full-image margin-auto"
-                                    style={{ backgroundImage: 'url(' + ('https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png' || url) + ')',
-                                    height: '200px', width: '80vw'
-                                    }}>
+                                    style={{ height: '200px', width: '80vw'}}>
+                                    <img
+                                      style={{ width: '100%', height: '100%' }}
+                                      alt="example"
+                                      src={ url }
+                                    />
                                 </div>
                             </div>
                         )
